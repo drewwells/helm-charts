@@ -28,14 +28,20 @@ plugins:
           database_type: "sqlite3"
           connection_string: "/run/spire/data/datastore.sqlite3"
 
+
+  {{- if or (eq (.enabled | toString) "true") (ne .Values.customNodeAttestor nil) }}
+  NodeAttestor:
   {{- with .Values.nodeAttestor.k8sPsat }}
   {{- if eq (.enabled | toString) "true" }}
-  NodeAttestor:
     - k8s_psat:
         plugin_data:
           clusters:
             {{ $root.Values.clusterName }}:
               service_account_allow_list: {{ include "spire-server.serviceAccountAllowedList" $root | trim }}
+  {{- range $key, $value := .Values.customNodeAttestor -}}
+    - {{ $key }}:
+        {{- $value | nindent 8 }}
+  {{- end }}
   {{- end }}
   {{- end }}
 

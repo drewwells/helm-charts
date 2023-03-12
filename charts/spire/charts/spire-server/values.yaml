@@ -193,3 +193,11 @@ nodeAttestor:
   k8sPsat:
     enabled: true
     serviceAccountAllowList: []
+
+# -- Allows to define additional custom Node attestors
+customNodeAttestors: {}
+  # e.g.:
+  # foo:
+  #   plugin_data:
+  #     bar: 'qux'
+  #     baz: 'quux'
