@@ -5,6 +5,9 @@ set -x
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
+# shellcheck source=/dev/null
+source "${SCRIPTPATH}/../common.sh"
+
 k_wait=(kubectl wait --for condition=available --timeout 30s --namespace)
 k_rollout_status=(kubectl rollout status --watch --timeout 30s --namespace)
 
