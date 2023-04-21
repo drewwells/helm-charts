@@ -1,4 +1,6 @@
 global:
+  spire:
+    strictChecking: true
   telemetry:
     prometheus:
       enabled: true

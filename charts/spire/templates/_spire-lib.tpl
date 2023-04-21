@@ -50,3 +50,15 @@
 {{- printf "%s/%s" $registry .image.repository -}}
 {{- end -}}
 {{- end }}
+
+{{/*
+Take in an array of, '.', a failure string to display, and boolean to to display it,
+if strict checking is enabled and the boolean is true
+*/}}
+{{- define "spire-lib.strict-check" }}
+{{- if (dig "spire" "strictChecking" false (index . 0).Values.global) }}
+{{- if (index . 2) }}
+{{- fail (index . 1) }}
+{{- end }}
+{{- end }}
+{{- end }}
