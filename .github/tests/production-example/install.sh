@@ -8,6 +8,7 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 helm install \
   --namespace spire-server \
   --values "${SCRIPTPATH}/../../../examples/production/values.yaml" \
+  --values "${SCRIPTPATH}/values.yaml" \
   spire charts/spire --wait
 
 helm test spire --namespace spire-server
