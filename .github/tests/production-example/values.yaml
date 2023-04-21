@@ -1,4 +1,4 @@
-globals:
+global:
   spire:
     clusterName: production
     trustDomain: production.other
