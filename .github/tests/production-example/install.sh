@@ -17,5 +17,5 @@ set +e
 helm get manifest -n spire-server spire  | grep -i example
 if [ $? -eq 0 ]; then
   echo Global settings did not work. Please fix.
-  exit -1
+  exit 1
 fi
