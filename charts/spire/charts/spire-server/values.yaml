@@ -46,6 +46,10 @@ service:
   port: 8081
   annotations: {}
 
+configMap:
+  # -- Annotations to add to the SPIRE Server ConfigMap
+  annotations: {}
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -73,11 +77,30 @@ affinity: {}
 
 topologySpreadConstraints: []
 
-dataStorage:
-  enabled: true
+persistence:
   size: 1Gi
   accessMode: ReadWriteOnce
   storageClass: null
+
+dataStore:
+  sql:
+    # -- Other supported databases are "postgres" and "mysql"
+    databaseType: sqlite3
+    # -- Only used by "postgres" or "mysql"
+    databaseName: spire
+    # -- Only used by "postgres" or "mysql"
+    host: ""
+    # -- If 0 (default), it will auto set to 5432 for postgres and 3306 for mysql. Only used by those databases.
+    port: 0
+    # -- Only used by "postgres" or "mysql"
+    username: spire
+    # -- Only used by "postgres" or "mysql"
+    password: ""
+    # -- Only used by "postgres" or "mysql"
+    options: []
+
+    # -- Settings from https://github.com/spiffe/spire/blob/main/doc/plugin_server_datastore_sql.md go in this section
+    plugin_data: {}
 
 logLevel: info
 jwtIssuer: oidc-discovery.example.org
@@ -163,6 +186,10 @@ controllerManager:
   service:
     type: ClusterIP
     port: 443
+    annotations: {}
+
+  configMap:
+    # -- Annotations to add to the Controller Manager ConfigMap
     annotations: {}
 
   ignoreNamespaces:
