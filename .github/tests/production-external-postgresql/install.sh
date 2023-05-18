@@ -41,6 +41,7 @@ helm install \
   --namespace "spire-server" \
   --values /tmp/$$-spire-values.yaml \
   --values "${SCRIPTPATH}/../../../examples/production/values.yaml" \
+  --values "${SCRIPTPATH}/../production-example/values.yaml" \
   spire charts/spire --wait
 
 helm test spire --namespace "spire-server"

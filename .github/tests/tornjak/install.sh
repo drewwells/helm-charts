@@ -9,5 +9,6 @@ helm install \
   --namespace spire-server \
   --values "${SCRIPTPATH}/../../../examples/production/values.yaml" \
   --values "${SCRIPTPATH}/../../../examples/tornjak/values.yaml" \
+  --values "${SCRIPTPATH}/../production-example/values.yaml" \
   spire charts/spire --wait
 helm test spire -n spire-server
