@@ -33,15 +33,38 @@
 {{- define "spire-lib.registry" }}
 {{- if ne (len (dig "spire" "image" "registry" "" .global)) 0 }}
 {{- .global.spire.image.registry }}
-{{- else }}
+{{- else if hasKey . "image" }}
 {{- .image.registry }}
+{{- else }}
+{{- .defaultImage.registry }}
+{{- end }}
+{{- end }}
+
+{{- define "spire-lib.tag" }}
+{{- if hasKey . "image" }}
+{{-   if or (hasKey .image "tag") (hasKey .image "version") }}
+{{-     (default .image.tag .image.version) | toString }}
+{{-   else }}
+{{-     .defaultImage.tag | toString }}
+{{-   end }}
+{{- else }}
+{{-   .defaultImage.tag | toString }}
+{{- end }}
+{{- end }}
+
+{{- define "spire-lib.repository" }}
+{{- $repo := dig "image" "repository" "" . }}
+{{- if gt (len $repo) 0 }}
+{{-   $repo }}
+{{- else }}
+{{-   .defaultImage.repository }}
 {{- end }}
 {{- end }}
 
 {{- define "spire-lib.image" -}}
 {{- $registry := include "spire-lib.registry" . }}
-{{- $repo := .image.repository }}
-{{- $tag := (default .image.tag .image.version) | toString }}
+{{- $repo := include "spire-lib.repository" . }}
+{{- $tag := include "spire-lib.tag" . }}
 {{- if eq (substr 0 7 $tag) "sha256:" }}
 {{- printf "%s/%s@%s" $registry $repo $tag }}
 {{- else if .appVersion }}
@@ -51,6 +74,26 @@
 {{- else }}
 {{- printf "%s/%s" $registry $repo }}
 {{- end }}
+{{- end }}
+
+{{- define "spire-lib.image-default" -}}
+{{- $args := deepCopy . }}
+{{- $_ := set $args "global" .Values.global }}
+{{- $imageList := split "." .imagePath }}
+{{- $image := .Values }}
+{{- $found := true }}
+{{- range $imageList }}
+{{-   if hasKey $image . }}
+{{-     $image = index $image . }}
+{{-   else }}
+{{-     $found = false }}
+{{-     break }}
+{{-   end }}
+{{-   if $found }}
+{{-     $_ := set $args "image" $image }}
+{{-   end }}
+{{- end }}
+{{- include "spire-lib.image" $args }}
 {{- end }}
 
 {{/* Takes in a dictionary with keys:

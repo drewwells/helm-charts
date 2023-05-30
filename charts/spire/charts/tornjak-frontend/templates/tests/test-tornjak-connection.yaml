@@ -1,3 +1,4 @@
+{{- $defaultImage := .Files.Get "files/tests.yaml" | fromYaml }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -12,7 +13,7 @@ spec:
     {{- toYaml .Values.podSecurityContext | nindent 4 }}
   containers:
     - name: curl-tornjak-frontend
-      image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
+      image: {{ template "spire-lib.image-default" (dict "imagePath" "tests.bash.image" "Values" .Values "defaultImage" $defaultImage) }}
       command: ['curl']
       args: ['-k', '-s', '-f', 'http://{{ include "tornjak-frontend.fullname" . }}.{{ include "tornjak-frontend.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}:{{ .Values.service.port }}']
       securityContext:
