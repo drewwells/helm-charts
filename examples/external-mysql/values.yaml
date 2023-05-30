@@ -2,9 +2,10 @@ spire-server:
   dataStore:
     sql:
       databaseType: mysql
-      databaseName: spire
-      host: mysql
+      databaseName: spire-server
+      host: mysql.mysql
       port: 3306
       username: spire
+      password: sp1ff3Test
       options:
         - parseTime: true
