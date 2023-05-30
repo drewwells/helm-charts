@@ -8,14 +8,14 @@ spire-server:
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     hosts:
-    - host: ingress-nginx-controller.spire-oidc-insecure
+    - host: ingress-nginx-controller.ingress-nginx
       paths:
         - path: /
           pathType: Prefix
 
 spire-agent:
   server:
-    address: ingress-nginx-controller.spire-oidc-insecure
+    address: ingress-nginx-controller.ingress-nginx
     port: 443
 
 spiffe-oidc-discovery-provider:
@@ -27,6 +27,7 @@ spiffe-oidc-discovery-provider:
   config:
     domains:
       - ingress-nginx-controller
+      - ingress-nginx-controller.ingress-nginx
 
     acme:
       tosAccepted: false
