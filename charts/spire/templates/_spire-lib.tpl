@@ -32,11 +32,11 @@
 
 {{- define "spire-lib.registry" }}
 {{- if ne (len (dig "spire" "image" "registry" "" .global)) 0 }}
-{{- .global.spire.image.registry }}
-{{- else if hasKey . "image" }}
-{{- .image.registry }}
-{{- else }}
-{{- .defaultImage.registry }}
+{{- print .global.spire.image.registry "/"}}
+{{- else if ne (len (dig "image" "registry" "" .)) 0 }}
+{{- print .image.registry "/"}}
+{{- else if ne (len (dig "defaultImage" "registry" "" .)) 0 }}
+{{- print .defaultImage.registry "/"}}
 {{- end }}
 {{- end }}
 
@@ -66,13 +66,13 @@
 {{- $repo := include "spire-lib.repository" . }}
 {{- $tag := include "spire-lib.tag" . }}
 {{- if eq (substr 0 7 $tag) "sha256:" }}
-{{- printf "%s/%s@%s" $registry $repo $tag }}
+{{- printf "%s%s@%s" $registry $repo $tag }}
 {{- else if .appVersion }}
-{{- printf "%s/%s:%s" $registry $repo (default .appVersion $tag) }}
+{{- printf "%s%s:%s" $registry $repo (default .appVersion $tag) }}
 {{- else if $tag }}
-{{- printf "%s/%s:%s" $registry $repo $tag }}
+{{- printf "%s%s:%s" $registry $repo $tag }}
 {{- else }}
-{{- printf "%s/%s" $registry $repo }}
+{{- printf "%s%s" $registry $repo }}
 {{- end }}
 {{- end }}
 
