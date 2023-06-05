@@ -15,8 +15,8 @@ eval "$VERSIONS"
 helm_install=(helm upgrade --install --create-namespace)
 
 # namespace override
-kubectl create namespace spire-system
-kubectl create namespace spire-server
+kubectl create namespace spire-system || true
+kubectl create namespace spire-server || true
 
 # nginx ingress
 "${helm_install[@]}" ingress-nginx ingress-nginx --version "${VERSION_INGRESS_NGINX}" --repo "${HELM_REPO_INGRESS_NGINX}" \

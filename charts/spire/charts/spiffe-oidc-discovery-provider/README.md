@@ -30,6 +30,11 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | config.domains[1] | string | `"oidc-discovery.example.org"` |  |
 | config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
+| deleteHook.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| deleteHook.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
+| deleteHook.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
+| deleteHook.image.tag | string | `""` | Overrides the image tag |
+| deleteHook.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |

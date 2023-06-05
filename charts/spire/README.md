@@ -168,6 +168,11 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.config.domains[1] | string | `"oidc-discovery.example.org"` |  |
 | spiffe-oidc-discovery-provider.config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spiffe-oidc-discovery-provider.configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
+| spiffe-oidc-discovery-provider.deleteHook.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spiffe-oidc-discovery-provider.deleteHook.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
+| spiffe-oidc-discovery-provider.deleteHook.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
+| spiffe-oidc-discovery-provider.deleteHook.image.tag | string | `""` | Overrides the image tag |
+| spiffe-oidc-discovery-provider.deleteHook.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.fullnameOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spiffe-oidc-discovery-provider.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
